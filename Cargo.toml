@@ -5,4 +5,4 @@ authors = ["Jeremy M. Reed <reeje76@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-clap = "4.2.5"
+clap = { version = "4.2.5", features = ["cargo"] }
