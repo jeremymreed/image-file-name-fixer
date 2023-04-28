@@ -1,3 +1,5 @@
+mod arg_parser;
+
 fn main() {
-    println!("Hello, world!");
+    arg_parser::parse_args();
 }
