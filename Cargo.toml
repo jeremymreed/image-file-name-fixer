@@ -4,7 +4,13 @@ version = "0.0.1-alpha"
 description = "Normalizes image file names to standard naming scheme."
 authors = ["Jeremy M. Reed <reeje76@gmail.com>"]
 edition = "2021"
+build = "build.rs"
+
+[build-dependencies]
+shadow-rs = "0.21.0"
 
 [dependencies]
 clap = { version = "4.2.5", features = ["cargo"] }
 image = { version = "0.24.6", features = ["libwebp"] }
+shadow-rs = "0.21.0"
+lazy_static = "1.4.0"
