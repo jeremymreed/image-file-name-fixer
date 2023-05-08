@@ -1,9 +1,16 @@
 [package]
 name = "image-file-name-fixer"
-version = "0.0.0"
+version = "0.0.1"
+description = "Normalizes image file names to standard naming scheme."
 authors = ["Jeremy M. Reed <reeje76@gmail.com>"]
 edition = "2021"
+build = "build.rs"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[build-dependencies]
+shadow-rs = "0.21.0"
 
 [dependencies]
+clap = { version = "4.2.5", features = ["cargo"] }
+image = { version = "0.24.6", features = ["libwebp"] }
+shadow-rs = "0.21.0"
+lazy_static = "1.4.0"
