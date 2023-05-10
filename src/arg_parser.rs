@@ -1,3 +1,4 @@
+use std::fs;
 use clap::{Arg, Command};
 use lazy_static::lazy_static;
 use crate::config;
@@ -22,7 +23,11 @@ pub fn parse_args() -> config::Config {
         None => panic!("Must give a file name!"),
     };
 
+    let absolute_path = fs::canonicalize(file_name).unwrap().display().to_string();
+
+    println!("absolute_path: {:?}", absolute_path);
+
     config::Config {
-        file_name: file_name.clone(),
+        file_name: absolute_path.clone(),
     }
 }
