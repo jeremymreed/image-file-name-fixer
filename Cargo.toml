@@ -14,3 +14,4 @@ clap = { version = "4.2.5", features = ["cargo"] }
 image = { version = "0.24.6", features = ["libwebp"] }
 shadow-rs = "0.21.0"
 lazy_static = "1.4.0"
+regex = "1.8.1"
