@@ -10,7 +10,5 @@ fn main() {
 
     processor::process_path(&config.absolute_path);
 
-    //let img = image::open(config.file_name).unwrap();
-
     processor::process_file(&config.absolute_path);
 }
