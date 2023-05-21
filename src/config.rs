@@ -1,3 +1,3 @@
 pub struct Config {
-    pub file_name: String,
+    pub absolute_path: String,
 }

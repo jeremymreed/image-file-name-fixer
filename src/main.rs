@@ -12,11 +12,11 @@ shadow!(build);
 fn main() {
     let config: config::Config = arg_parser::parse_args();
 
-    processor::process_path(&config.file_name);
+    processor::process_path(&config.absolute_path);
 
     //let img = image::open(config.file_name).unwrap();
 
-    let reader = Reader::open(config.file_name).unwrap()
+    let reader = Reader::open(config.absolute_path).unwrap()
         .with_guessed_format()
         .expect("Failed to open image file");
 
