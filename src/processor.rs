@@ -17,7 +17,7 @@ pub fn process_file(absolute_path: &String) {
     println!("Format: {:?}", reader.format());
     let raw_format = match reader.format() {
         Some(format) => format,
-        None => panic!("No format"),
+        None => panic!("Unknown format"),
     };
 
     let format = match raw_format {
