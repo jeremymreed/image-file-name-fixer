@@ -2,6 +2,7 @@ use std::fs;
 use image::GenericImageView;
 use image::ImageFormat;
 use image::io::Reader;
+use crate::image_data;
 
 pub fn process_path(path: &String) -> String {
     let absolute_path: String = fs::canonicalize(path).unwrap().display().to_string();
@@ -33,4 +34,13 @@ pub fn process_file(absolute_path: &String) {
     let img = reader.decode().expect("Failed to read image");
 
     println!("Dimensions: {:?}", img.dimensions());
+
+    let image_data = image_data::ImageData {
+        absolute_path: String::from(absolute_path),
+        format: format,
+        width: img.width(),
+        height: img.height(),
+    };
+
+    println!("image_data: {:?}", image_data);
 }

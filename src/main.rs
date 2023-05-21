@@ -1,6 +1,7 @@
 use shadow_rs::shadow;
 mod arg_parser;
 mod config;
+mod image_data;
 mod processor;
 
 shadow!(build);
