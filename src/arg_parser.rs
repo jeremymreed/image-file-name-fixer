@@ -5,6 +5,7 @@ use crate::config;
 use crate::build;
 
 pub fn parse_args() -> config::Config {
+    // Build our version string.
     lazy_static! {
         static ref PKG_VERSION: String = format!("v{}", build::PKG_VERSION);
     }
@@ -23,6 +24,7 @@ pub fn parse_args() -> config::Config {
         None => panic!("Must give a file name!"),
     };
 
+    // If the path is invalid, panic.
     let absolute_path = fs::canonicalize(file_name).unwrap().display().to_string();
 
     println!("absolute_path: {:?}", absolute_path);
