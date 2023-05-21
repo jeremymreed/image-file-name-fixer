@@ -1,9 +1,11 @@
+use crate::build;
+use crate::config;
+use crate::processor;
 use clap::{Arg, Command};
 use lazy_static::lazy_static;
-use crate::config;
-use crate::build;
 
 pub fn parse_args() -> config::Config {
+    // Build our version string.
     lazy_static! {
         static ref PKG_VERSION: String = format!("v{}", build::PKG_VERSION);
     }
@@ -12,17 +14,20 @@ pub fn parse_args() -> config::Config {
     let matches = Command::new("Image File Name Fixer")
         .version(PKG_VERSION.as_str())
         .about(clap::crate_description!())
-        .arg(Arg::new("file_name"))
+        .arg(Arg::new("raw_path"))
         .get_matches();
 
-    println!("file_name: {:?}", matches.get_one::<String>("file_name"));
+    println!("raw_path: {:?}", matches.get_one::<String>("raw_path"));
 
-    let file_name = match matches.get_one::<String>("file_name") {
-        Some(file_name) => file_name,
-        None => panic!("Must give a file name!"),
+    let raw_path = match matches.get_one::<String>("raw_path") {
+        Some(raw_path) => raw_path,
+        None => panic!("Must give a valid path!"),
     };
 
+    // If the path is invalid, panic.
+    let absolute_path = processor::process_path(raw_path);
+
     config::Config {
-        file_name: file_name.clone(),
+        absolute_path: absolute_path.clone(),
     }
 }
