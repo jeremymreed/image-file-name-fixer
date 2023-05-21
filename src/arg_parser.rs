@@ -1,8 +1,8 @@
+use crate::build;
+use crate::config;
+use crate::processor;
 use clap::{Arg, Command};
 use lazy_static::lazy_static;
-use crate::processor;
-use crate::config;
-use crate::build;
 
 pub fn parse_args() -> config::Config {
     // Build our version string.
