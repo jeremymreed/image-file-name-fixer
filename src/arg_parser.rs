@@ -27,8 +27,6 @@ pub fn parse_args() -> config::Config {
     // If the path is invalid, panic.
     let absolute_path = processor::process_path(raw_path);
 
-    println!("absolute_path: {:?}", absolute_path);
-
     config::Config {
         absolute_path: absolute_path.clone(),
     }

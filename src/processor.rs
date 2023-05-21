@@ -60,11 +60,7 @@ pub fn process_file(absolute_path: &String) {
         _ => panic!("Unspported format"),
     };
 
-    println!("Format: {}", format);
-
     let img = reader.decode().expect("Failed to read image");
-
-    println!("Dimensions: {:?}", img.dimensions());
 
     let mut image_data = image_data::ImageData {
         absolute_path: String::from(absolute_path),
@@ -74,11 +70,7 @@ pub fn process_file(absolute_path: &String) {
         height: img.height(),
     };
 
-    println!("before: image_data: {:#?}", image_data);
-
     fix_file_name(&mut image_data);
-
-    println!("after: image_data: {:#?}", image_data);
 
     copy_file(&image_data);
 }
