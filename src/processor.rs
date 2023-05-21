@@ -15,12 +15,12 @@ pub fn process_file(absolute_path: &String) {
         .expect("Failed to open image file");
 
     println!("Format: {:?}", reader.format());
-    let format = match reader.format() {
+    let raw_format = match reader.format() {
         Some(format) => format,
         None => panic!("No format"),
     };
 
-    let test = match format {
+    let format = match raw_format {
         ImageFormat::Png => String::from("png"),
         ImageFormat::Jpeg => String::from("jpeg"),
         ImageFormat::Gif => String::from("gif"),
@@ -28,7 +28,7 @@ pub fn process_file(absolute_path: &String) {
         _ => panic!("Unspported format"),
     };
 
-    println!("Format: {}", test);
+    println!("Format: {}", format);
 
     let img = reader.decode().expect("Failed to read image");
 
