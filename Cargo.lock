@@ -523,7 +523,7 @@ dependencies = [
 
 [[package]]
 name = "image-file-name-fixer"
-version = "0.0.2"
+version = "0.0.3-pre"
 dependencies = [
  "clap",
  "image",
