@@ -11,5 +11,5 @@ fn main() {
 
     processor::process_path(&config.absolute_path);
 
-    processor::process_file(&config.absolute_path);
+    processor::process_file(&config);
 }

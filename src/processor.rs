@@ -6,6 +6,7 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use std::fs;
 use std::path::PathBuf;
+use crate::config::Config;
 
 lazy_static! {
     static ref PATTERN: Regex = Regex::new("([-]?[0-9]+[×xX][0-9]+|[-]?[0-9a-fA-F]{64})").unwrap();
@@ -37,11 +38,18 @@ pub fn copy_file(image_data: &image_data::ImageData) {
         image_data.absolute_path.clone(),
         image_data.final_absolute_path.clone(),
     )
-    .expect("Failed to rename file");
+    .expect("Failed to copy file");
 }
 
-pub fn process_file(absolute_path: &String) {
-    let reader = Reader::open(absolute_path)
+pub fn move_file(image_data: &image_data::ImageData) {
+    fs::rename(
+        image_data.absolute_path.clone(),
+        image_data.final_absolute_path.clone(),
+    ).expect("Failed to rename file");
+}
+
+pub fn process_file(config: &Config) {
+    let reader = Reader::open(&config.absolute_path)
         .unwrap()
         .with_guessed_format()
         .expect("Failed to open image file");
@@ -63,7 +71,7 @@ pub fn process_file(absolute_path: &String) {
     let img = reader.decode().expect("Failed to read image");
 
     let mut image_data = image_data::ImageData {
-        absolute_path: String::from(absolute_path),
+        absolute_path: String::from(&config.absolute_path),
         final_absolute_path: String::from(""),
         format: format,
         width: img.width(),
@@ -72,5 +80,9 @@ pub fn process_file(absolute_path: &String) {
 
     fix_file_name(&mut image_data);
 
-    copy_file(&image_data);
+    if config.move_files {
+        move_file(&image_data);
+    } else {
+        copy_file(&image_data);
+    }
 }
