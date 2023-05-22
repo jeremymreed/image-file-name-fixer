@@ -1,7 +1,7 @@
 use crate::build;
 use crate::config;
 use crate::processor;
-use clap::{Arg, Command, ArgAction};
+use clap::{Arg, ArgAction, Command};
 use lazy_static::lazy_static;
 
 pub fn parse_args() -> config::Config {
@@ -14,15 +14,19 @@ pub fn parse_args() -> config::Config {
     let matches = Command::new("Image File Name Fixer")
         .version(PKG_VERSION.as_str())
         .about(clap::crate_description!())
-        .arg(Arg::new("move")
-            .short('m')
-            .long("move")
-            .action(ArgAction::SetTrue)
-            .help("Move the files instead of copying them."))
-        .arg(Arg::new("hash")
-            .long("hash")
-            .action(ArgAction::SetTrue)
-            .help("Calculate and include sha256 hashes in file names."))
+        .arg(
+            Arg::new("move")
+                .short('m')
+                .long("move")
+                .action(ArgAction::SetTrue)
+                .help("Move the files instead of copying them."),
+        )
+        .arg(
+            Arg::new("hash")
+                .long("hash")
+                .action(ArgAction::SetTrue)
+                .help("Calculate and include sha256 hashes in file names."),
+        )
         .arg(Arg::new("raw_path"))
         .get_matches();
 

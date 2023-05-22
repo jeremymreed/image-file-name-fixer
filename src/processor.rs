@@ -1,15 +1,15 @@
-use crate::image_data;
 use crate::config;
+use crate::config::Config;
+use crate::image_data;
 use image::io::Reader;
 use image::GenericImageView;
-use sha256;
 use image::ImageFormat;
 use lazy_static::lazy_static;
 use regex::Regex;
+use sha256;
 use std::fs;
-use std::path::PathBuf;
 use std::path::Path;
-use crate::config::Config;
+use std::path::PathBuf;
 
 lazy_static! {
     static ref PATTERN: Regex = Regex::new("([-]?[0-9]+[×xX][0-9]+|[-]?[0-9a-fA-F]{64})").unwrap();
@@ -35,7 +35,11 @@ pub fn fix_file_name(config: &config::Config, image_data: &mut image_data::Image
     if config.should_hash {
         final_file_path.set_file_name(format!(
             "{}-{}-{}x{}.{}",
-            clean_file_name, image_data.hash, image_data.width, image_data.height, image_data.format
+            clean_file_name,
+            image_data.hash,
+            image_data.width,
+            image_data.height,
+            image_data.format
         ));
     } else {
         final_file_path.set_file_name(format!(
@@ -59,7 +63,8 @@ pub fn move_file(image_data: &image_data::ImageData) {
     fs::rename(
         image_data.absolute_path.clone(),
         image_data.final_absolute_path.clone(),
-    ).expect("Failed to rename file");
+    )
+    .expect("Failed to rename file");
 }
 
 pub fn process_file(config: &Config) {
