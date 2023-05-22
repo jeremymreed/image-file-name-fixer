@@ -2,7 +2,6 @@ use crate::config;
 use crate::config::Config;
 use crate::image_data;
 use image::io::Reader;
-use image::GenericImageView;
 use image::ImageFormat;
 use lazy_static::lazy_static;
 use regex::Regex;
