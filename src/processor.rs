@@ -20,11 +20,11 @@ pub fn process_path(path: &String) -> String {
     absolute_path
 }
 
-pub fn generate_hash(image_data: &mut image_data::ImageData) {
-    image_data.hash = sha256::try_digest(Path::new(&image_data.absolute_path)).unwrap();
+pub fn generate_hash(image_data: &image_data::ImageData) -> String {
+    sha256::try_digest(Path::new(&image_data.absolute_path)).unwrap()
 }
 
-pub fn fix_file_name(config: &config::Config, image_data: &mut image_data::ImageData) {
+pub fn fix_file_name(config: &config::Config, image_data: &image_data::ImageData) -> String {
     let mut final_file_path: PathBuf = PathBuf::from(image_data.absolute_path.clone());
 
     let file_name = final_file_path.file_stem().unwrap().to_str().unwrap();
@@ -47,7 +47,7 @@ pub fn fix_file_name(config: &config::Config, image_data: &mut image_data::Image
         ));
     }
 
-    image_data.final_absolute_path = final_file_path.display().to_string();
+    final_file_path.display().to_string()
 }
 
 pub fn copy_file(image_data: &image_data::ImageData) {
@@ -97,9 +97,9 @@ pub fn process_file(config: &Config) {
         hash: String::from(""),
     };
 
-    generate_hash(&mut image_data);
+    image_data.hash = generate_hash(&image_data);
 
-    fix_file_name(&config, &mut image_data);
+    image_data.final_absolute_path = fix_file_name(&config, &image_data);
 
     if config.move_files {
         move_file(&image_data);
