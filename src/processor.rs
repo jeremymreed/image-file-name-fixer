@@ -1,11 +1,14 @@
 use crate::image_data;
+use crate::config;
 use image::io::Reader;
 use image::GenericImageView;
+use sha256;
 use image::ImageFormat;
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::fs;
 use std::path::PathBuf;
+use std::path::Path;
 use crate::config::Config;
 
 lazy_static! {
@@ -18,19 +21,30 @@ pub fn process_path(path: &String) -> String {
     absolute_path
 }
 
-pub fn fix_file_name(image_data: &mut image_data::ImageData) {
-    let mut result: PathBuf = PathBuf::from(image_data.absolute_path.clone());
+pub fn generate_hash(image_data: &mut image_data::ImageData) {
+    image_data.hash = sha256::try_digest(Path::new(&image_data.absolute_path)).unwrap();
+}
 
-    let file_name = result.file_stem().unwrap().to_str().unwrap();
+pub fn fix_file_name(config: &config::Config, image_data: &mut image_data::ImageData) {
+    let mut final_file_path: PathBuf = PathBuf::from(image_data.absolute_path.clone());
 
-    let test = PATTERN.replace_all(file_name, "");
+    let file_name = final_file_path.file_stem().unwrap().to_str().unwrap();
 
-    result.set_file_name(format!(
-        "{}-{}x{}.{}",
-        test, image_data.width, image_data.height, image_data.format
-    ));
+    let clean_file_name = PATTERN.replace_all(file_name, "");
 
-    image_data.final_absolute_path = result.display().to_string();
+    if config.should_hash {
+        final_file_path.set_file_name(format!(
+            "{}-{}-{}x{}.{}",
+            clean_file_name, image_data.hash, image_data.width, image_data.height, image_data.format
+        ));
+    } else {
+        final_file_path.set_file_name(format!(
+            "{}-{}x{}.{}",
+            clean_file_name, image_data.width, image_data.height, image_data.format
+        ));
+    }
+
+    image_data.final_absolute_path = final_file_path.display().to_string();
 }
 
 pub fn copy_file(image_data: &image_data::ImageData) {
@@ -76,9 +90,12 @@ pub fn process_file(config: &Config) {
         format: format,
         width: img.width(),
         height: img.height(),
+        hash: String::from(""),
     };
 
-    fix_file_name(&mut image_data);
+    generate_hash(&mut image_data);
+
+    fix_file_name(&config, &mut image_data);
 
     if config.move_files {
         move_file(&image_data);

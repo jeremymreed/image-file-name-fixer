@@ -19,6 +19,10 @@ pub fn parse_args() -> config::Config {
             .long("move")
             .action(ArgAction::SetTrue)
             .help("Move the files instead of copying them."))
+        .arg(Arg::new("hash")
+            .long("hash")
+            .action(ArgAction::SetTrue)
+            .help("Calculate and include sha256 hashes in file names."))
         .arg(Arg::new("raw_path"))
         .get_matches();
 
@@ -34,11 +38,17 @@ pub fn parse_args() -> config::Config {
         None => panic!("Got some garbage value!"),
     };
 
+    let should_hash = match matches.get_one::<bool>("hash") {
+        Some(should_hash) => should_hash,
+        None => panic!("Got some garbage value!"),
+    };
+
     // If the path is invalid, panic.
     let absolute_path = processor::process_path(raw_path);
 
     config::Config {
         absolute_path: absolute_path.clone(),
         move_files: *move_files,
+        should_hash: *should_hash,
     }
 }

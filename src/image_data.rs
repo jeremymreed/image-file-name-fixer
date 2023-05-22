@@ -5,4 +5,5 @@ pub struct ImageData {
     pub format: String,
     pub width: u32,
     pub height: u32,
+    pub hash: String,
 }
