@@ -27,10 +27,14 @@ pub fn parse_args() -> config::Config {
                 .action(ArgAction::SetTrue)
                 .help("Calculate and include sha256 hashes in file names."),
         )
+        .arg(
+            Arg::new("dry_run")
+                .long("dry-run")
+                .action(ArgAction::SetTrue)
+                .help("Don't actually do anything, just print what would happen."),
+        )
         .arg(Arg::new("raw_path"))
         .get_matches();
-
-    println!("raw_path: {:?}", matches.get_one::<String>("raw_path"));
 
     let raw_path = match matches.get_one::<String>("raw_path") {
         Some(raw_path) => raw_path,
@@ -47,6 +51,11 @@ pub fn parse_args() -> config::Config {
         None => panic!("Got some garbage value!"),
     };
 
+    let dry_run = match matches.get_one::<bool>("dry_run") {
+        Some(dry_run) => dry_run,
+        None => panic!("Got some garbage value!"),
+    };
+
     // If the path is invalid, panic.
     let absolute_path = processor::process_path(raw_path);
 
@@ -54,5 +63,6 @@ pub fn parse_args() -> config::Config {
         starting_absolute_path: absolute_path.clone(),
         move_files: *move_files,
         should_hash: *should_hash,
+        dry_run: *dry_run,
     }
 }

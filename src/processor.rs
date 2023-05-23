@@ -50,20 +50,43 @@ pub fn fix_file_name(config: &config::Config, image_data: &image_data::ImageData
     final_file_path.display().to_string()
 }
 
-pub fn copy_file(image_data: &image_data::ImageData) {
-    fs::copy(
-        image_data.absolute_path.clone(),
-        image_data.final_absolute_path.clone(),
-    )
-    .expect("Failed to copy file");
+pub fn print_output(prefix: String, image_data: &image_data::ImageData) {
+    println!(
+        "{}: {} -> {}",
+        prefix, image_data.absolute_path, image_data.final_absolute_path
+    );
 }
 
-pub fn move_file(image_data: &image_data::ImageData) {
-    fs::rename(
-        image_data.absolute_path.clone(),
-        image_data.final_absolute_path.clone(),
-    )
-    .expect("Failed to rename file");
+pub fn copy_file(config: &Config, image_data: &image_data::ImageData) {
+    if !config.dry_run {
+        fs::copy(
+            image_data.absolute_path.clone(),
+            image_data.final_absolute_path.clone(),
+        )
+        .expect("Failed to copy file");
+    }
+    print_output(String::from("Copying"), &image_data);
+}
+
+pub fn move_file(config: &Config, image_data: &image_data::ImageData) {
+    if !config.dry_run {
+        fs::rename(
+            image_data.absolute_path.clone(),
+            image_data.final_absolute_path.clone(),
+        )
+        .expect("Failed to move file");
+    }
+    print_output(String::from("Moving"), &image_data);
+}
+
+pub fn process(config: &Config, absolute_path: &String) {
+    let metadata = fs::metadata(absolute_path).unwrap();
+
+    if metadata.is_dir() {
+        process_directory(&config, absolute_path);
+    } else {
+        process_file(&config, absolute_path);
+    }
 }
 
 pub fn process_file(config: &Config, absolute_path: &String) {
@@ -72,10 +95,13 @@ pub fn process_file(config: &Config, absolute_path: &String) {
         .with_guessed_format()
         .expect("Failed to open image file");
 
-    println!("Format: {:?}", reader.format());
     let raw_format = match reader.format() {
         Some(format) => format,
-        None => panic!("Unknown format"),
+        None => {
+            // Skip over file.
+            println!("{}: Unrecognized format", absolute_path);
+            return;
+        }
     };
 
     let format = match raw_format {
@@ -83,7 +109,11 @@ pub fn process_file(config: &Config, absolute_path: &String) {
         ImageFormat::Jpeg => String::from("jpeg"),
         ImageFormat::Gif => String::from("gif"),
         ImageFormat::WebP => String::from("webp"),
-        _ => panic!("Unspported format"),
+        _ => {
+            // Skip over file.
+            println!("{}: Unsupported format", absolute_path);
+            return;
+        },
     };
 
     let img = reader.decode().expect("Failed to read image");
@@ -102,8 +132,18 @@ pub fn process_file(config: &Config, absolute_path: &String) {
     image_data.final_absolute_path = fix_file_name(&config, &image_data);
 
     if config.move_files {
-        move_file(&image_data);
+        move_file(&config, &image_data);
     } else {
-        copy_file(&image_data);
+        copy_file(&config, &image_data);
+    }
+}
+
+pub fn process_directory(config: &Config, absolute_path: &String) {
+    let paths = fs::read_dir(absolute_path).unwrap();
+
+    for path in paths {
+        let path = path.unwrap().path();
+
+        process(&config, &path.display().to_string());
     }
 }
