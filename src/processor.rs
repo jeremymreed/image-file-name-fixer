@@ -66,8 +66,8 @@ pub fn move_file(image_data: &image_data::ImageData) {
     .expect("Failed to rename file");
 }
 
-pub fn process_file(config: &Config) {
-    let reader = Reader::open(&config.absolute_path)
+pub fn process_file(config: &Config, absolute_path: &String) {
+    let reader = Reader::open(absolute_path)
         .unwrap()
         .with_guessed_format()
         .expect("Failed to open image file");
@@ -89,7 +89,7 @@ pub fn process_file(config: &Config) {
     let img = reader.decode().expect("Failed to read image");
 
     let mut image_data = image_data::ImageData {
-        absolute_path: String::from(&config.absolute_path),
+        absolute_path: String::from(absolute_path),
         final_absolute_path: String::from(""),
         format: format,
         width: img.width(),

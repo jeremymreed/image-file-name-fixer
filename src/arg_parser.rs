@@ -51,7 +51,7 @@ pub fn parse_args() -> config::Config {
     let absolute_path = processor::process_path(raw_path);
 
     config::Config {
-        absolute_path: absolute_path.clone(),
+        starting_absolute_path: absolute_path.clone(),
         move_files: *move_files,
         should_hash: *should_hash,
     }
