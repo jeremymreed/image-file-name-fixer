@@ -51,27 +51,35 @@ image-resolution field to the file name in the correct position.
 This program uses [image](https://crates.io/crates/image) to get image-resolution information.
 
 # Installation:
+This program is packaged for Arch Linux on the AUR.
+Run: `yay -Syu image-file-name-fixer` to install.
+
+To install from source, clone this repository and run these commands:
+```
+cargo build --release --locked
+cargo install
+```
+
+Cargo will install the `image-file-name-fixer` binary in `$HOME/.cargo/bin`.  Ensure that this directory is on your $PATH.
+The AUR package will install to `/usr/bin`.
 
 # Usage:
 
 Help message:
 ```
-usage: image-file-name-fixer [-h] [-i [PATHS ...]] [--version] [--dry-run] [-R] [-m]
-                             [--hash] [-v]
+Normalizes image file names to standard naming scheme.
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -i [PATHS ...], --input [PATHS ...]
-                        paths to files or directories to be processed.
-  --version             Output the version of this software and exit.
-  --dry-run             Run normally, but don't write anything to disk
-  -R, --recursive       Recursively process image files in a directory.
-                        Ignored when input is a file
-  -m, --move            Move the file, rather than copying it.
-  --hash                Generate hash sums, and append to file name.
-  -v, --verbose         Increase output detail. -v for basic output, -vv
-                        for detailed output.
+Usage: image-file-name-fixer [OPTIONS] [raw_path]
 
+Arguments:
+  [raw_path]
+
+Options:
+  -m, --move     Move the files instead of copying them.
+      --hash     Calculate and include sha256 hashes in file names.
+      --dry-run  Don't actually do anything, just print what would happen.
+  -h, --help     Print help
+  -V, --version  Print version
 ```
 
 # License:
