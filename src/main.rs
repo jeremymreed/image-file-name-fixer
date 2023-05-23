@@ -9,7 +9,7 @@ shadow!(build);
 fn main() {
     let config: config::Config = arg_parser::parse_args();
 
-    processor::process_path(&config.absolute_path);
+    processor::process_path(&config.starting_absolute_path);
 
-    processor::process_file(&config.absolute_path);
+    processor::process(&config, &config.starting_absolute_path);
 }

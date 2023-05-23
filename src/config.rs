@@ -1,3 +1,6 @@
 pub struct Config {
-    pub absolute_path: String,
+    pub starting_absolute_path: String,
+    pub move_files: bool,
+    pub should_hash: bool,
+    pub dry_run: bool,
 }
