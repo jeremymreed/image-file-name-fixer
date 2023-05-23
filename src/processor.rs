@@ -113,7 +113,7 @@ pub fn process_file(config: &Config, absolute_path: &String) {
             // Skip over file.
             println!("{}: Unsupported format", absolute_path);
             return;
-        },
+        }
     };
 
     let img = reader.decode().expect("Failed to read image");
