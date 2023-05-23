@@ -110,6 +110,7 @@ pub fn process_file(config: &Config, absolute_path: &String) {
         ImageFormat::Jpeg => String::from("jpeg"),
         ImageFormat::Gif => String::from("gif"),
         ImageFormat::WebP => String::from("webp"),
+        ImageFormat::Tiff => String::from("tiff"),
         _ => {
             // Skip over file.
             println!("{}: Unsupported format", absolute_path);
