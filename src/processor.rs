@@ -1,6 +1,7 @@
 use crate::config;
 use crate::config::Config;
 use crate::image_data;
+use colored::*;
 use image::io::Reader;
 use image::ImageFormat;
 use lazy_static::lazy_static;
@@ -53,7 +54,7 @@ pub fn fix_file_name(config: &config::Config, image_data: &image_data::ImageData
 pub fn print_output(prefix: String, image_data: &image_data::ImageData) {
     println!(
         "{}: {} -> {}",
-        prefix, image_data.absolute_path, image_data.final_absolute_path
+        prefix, image_data.absolute_path.red(), image_data.final_absolute_path.green()
     );
 }
 
