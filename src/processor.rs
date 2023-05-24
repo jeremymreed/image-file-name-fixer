@@ -118,20 +118,34 @@ pub fn process_file(config: &Config, absolute_path: &String) {
         }
     };
 
-    let img = match reader.decode() {
-        Ok(img) => img,
-        Err(error) => {
-            println!("{}: {}", absolute_path, error);
-            return;
-        }
-    };
+    let dimensions: (u32, u32);
+
+    if config.should_decode {
+        let img = match reader.decode() {
+            Ok(img) => img,
+            Err(error) => {
+                println!("{}: {}", absolute_path, error);
+                return;
+            }
+        };
+
+        dimensions = (img.width(), img.height());
+    } else {
+        dimensions = match reader.into_dimensions() {
+            Ok(dimensions) => dimensions,
+            Err(error) => {
+                println!("{}: {}", absolute_path, error);
+                return;
+            }
+        };
+    }
 
     let mut image_data = image_data::ImageData {
         absolute_path: String::from(absolute_path),
         final_absolute_path: String::from(""),
         format: format,
-        width: img.width(),
-        height: img.height(),
+        width: dimensions.0,
+        height: dimensions.1,
         hash: String::from(""),
     };
 
