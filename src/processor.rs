@@ -118,7 +118,13 @@ pub fn process_file(config: &Config, absolute_path: &String) {
         }
     };
 
-    let img = reader.decode().expect("Failed to read image");
+    let img = match reader.decode() {
+        Ok(img) => img,
+        Err(error) => {
+            println!("{}: {}", absolute_path, error);
+            return;
+        }
+    };
 
     let mut image_data = image_data::ImageData {
         absolute_path: String::from(absolute_path),
