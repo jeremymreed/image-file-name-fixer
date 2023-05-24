@@ -28,6 +28,13 @@ pub fn parse_args() -> config::Config {
                 .help("Calculate and include sha256 hashes in file names."),
         )
         .arg(
+            Arg::new("decode")
+                .short('d')
+                .long("decode")
+                .action(ArgAction::SetTrue)
+                .help("Decode image data."),
+        )
+        .arg(
             Arg::new("dry_run")
                 .long("dry-run")
                 .action(ArgAction::SetTrue)
@@ -51,6 +58,11 @@ pub fn parse_args() -> config::Config {
         None => panic!("Got some garbage value!"),
     };
 
+    let should_decode = match matches.get_one::<bool>("decode") {
+        Some(should_decode) => should_decode,
+        None => panic!("Got some garbage value!"),
+    };
+
     let dry_run = match matches.get_one::<bool>("dry_run") {
         Some(dry_run) => dry_run,
         None => panic!("Got some garbage value!"),
@@ -63,6 +75,7 @@ pub fn parse_args() -> config::Config {
         starting_absolute_path: absolute_path.clone(),
         move_files: *move_files,
         should_hash: *should_hash,
+        should_decode: *should_decode,
         dry_run: *dry_run,
     }
 }

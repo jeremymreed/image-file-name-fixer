@@ -22,6 +22,9 @@ The default behavior is to copy files, and does not include sha256 hash sums in 
 **--move**
 : Moves files rather than copying them.
 
+**--d, --decode**
+: Decode image data.  This will result in longer run time, but allows you to catch additional decode errors.
+
 **--dry-run**
 : Do not make any changes, but show what would be done.
 
