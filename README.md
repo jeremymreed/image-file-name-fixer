@@ -77,6 +77,7 @@ Arguments:
 Options:
   -m, --move     Move the files instead of copying them.
       --hash     Calculate and include sha256 hashes in file names.
+  -d, --decode   Decode image data.
       --dry-run  Don't actually do anything, just print what would happen.
   -h, --help     Print help
   -V, --version  Print version
