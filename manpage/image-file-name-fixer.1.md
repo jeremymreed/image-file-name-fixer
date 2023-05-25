@@ -1,4 +1,4 @@
-% IMAGE-FILE-NAME-FIXER(1) image-file-name-fixer 0.0.3
+% IMAGE-FILE-NAME-FIXER(1) image-file-name-fixer 0.0.4
 % Jeremy M. Reed
 % 2021-03-21
 
@@ -45,4 +45,4 @@ The default behavior is to copy files, and does not include sha256 hash sums in 
 [Issue Tracker](https://github.com/jeremymreed/image-file-name-fixer/issues)
 
 # COPYRIGHT
-Copyright (C) 2021 Jeremy M. Reed  License: MIT.
+Copyright (C) 2023 Jeremy M. Reed  License: MIT.
