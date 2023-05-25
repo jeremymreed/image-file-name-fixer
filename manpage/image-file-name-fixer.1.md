@@ -1,4 +1,4 @@
-% IMAGE-FILE-NAME-FIXER(1) image-file-name-fixer 0.0.4
+% IMAGE-FILE-NAME-FIXER(1) image-file-name-fixer 0.0.5
 % Jeremy M. Reed
 % 2021-03-21
 
