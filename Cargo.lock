@@ -608,7 +608,7 @@ dependencies = [
 
 [[package]]
 name = "image-file-name-fixer"
-version = "0.0.4"
+version = "0.0.5"
 dependencies = [
  "clap",
  "colored",
