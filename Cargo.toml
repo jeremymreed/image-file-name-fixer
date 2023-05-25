@@ -1,6 +1,6 @@
 [package]
 name = "image-file-name-fixer"
-version = "0.0.4"
+version = "0.0.5"
 description = "Normalizes image file names to standard naming scheme."
 authors = ["Jeremy M. Reed <reeje76@gmail.com>"]
 edition = "2021"
