@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Config {
     pub starting_absolute_path: String,
     pub move_files: bool,
