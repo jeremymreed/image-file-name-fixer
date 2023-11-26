@@ -81,13 +81,18 @@ pub fn move_file(config: &Config, image_data: &image_data::ImageData) {
 }
 
 pub fn process(config: &Config, absolute_path: &String) {
-    let metadata = fs::metadata(absolute_path).unwrap();
-
-    if metadata.is_dir() {
-        process_directory(&config, absolute_path);
-    } else {
-        process_file(&config, absolute_path);
-    }
+    match fs::metadata(absolute_path) {
+        Ok(metadata) => {
+            if metadata.is_dir() {
+                process_directory(&config, absolute_path);
+            } else {
+                process_file(&config, absolute_path);
+            }
+        }
+        Err(error) => {
+            println!("Couldn't process: {}, Error: {}", absolute_path, error);
+        }
+    };
 }
 
 pub fn process_file(config: &Config, absolute_path: &String) {
