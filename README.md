@@ -7,10 +7,10 @@ Image File Name Fixer
 
 ======================================
 ### Table of Contents
-1. [Purpose](https://gitlab.com/jeremymreed/image-file-name-fixer#purpose)
-2. [Installation](https://gitlab.com/jeremymreed/image-file-name-fixer#installation)
-3. [Usage](https://gitlab.com/jeremymreed/image-file-name-fixer#usage)
-4. [License](https://gitlab.com/jeremymreed/image-file-name-fixer#license)
+1. [Purpose](https://github.com/jeremymreed/image-file-name-fixer#purpose)
+2. [Installation](https://github.com/jeremymreed/image-file-name-fixer#installation)
+3. [Usage](https://github.com/jeremymreed/image-file-name-fixer#usage)
+4. [License](https://github.com/jeremymreed/image-file-name-fixer#license)
 
 
 # Purpose:
