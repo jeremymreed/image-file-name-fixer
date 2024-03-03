@@ -3,6 +3,7 @@ name = "image-file-name-fixer"
 version = "0.0.7"
 description = "Normalizes image file names to standard naming scheme."
 authors = ["Jeremy M. Reed <reeje76@gmail.com>"]
+publish = false
 edition = "2021"
 build = "build.rs"
 
