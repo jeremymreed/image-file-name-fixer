@@ -7,7 +7,7 @@ use lazy_static::lazy_static;
 pub fn parse_args() -> config::Config {
     // Build our version string.
     lazy_static! {
-        static ref PKG_VERSION: String = format!("v{}", build::PKG_VERSION);
+        static ref PKG_VERSION: String = format!("v{}-{}", build::PKG_VERSION, build::COMMIT_HASH);
     }
 
     // let pkg_version = concat!("v", clap::crate_version!());
