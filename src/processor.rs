@@ -96,6 +96,8 @@ pub fn process(config: &Config, absolute_path: &String) {
 }
 
 pub fn process_file(config: &Config, absolute_path: &String) {
+    println!("Processing: {}", absolute_path);
+
     let reader = Reader::open(absolute_path)
         .unwrap()
         .with_guessed_format()
@@ -166,11 +168,16 @@ pub fn process_file(config: &Config, absolute_path: &String) {
 }
 
 pub fn process_directory(config: &Config, absolute_path: &String) {
-    let paths = fs::read_dir(absolute_path).unwrap();
+    let result = fs::read_dir(absolute_path);
 
-    for path in paths {
-        let path = path.unwrap().path();
+    if let Ok(paths) = result {
 
-        process(&config, &path.display().to_string());
+        for path in paths {
+            let path = path.unwrap().path();
+
+            process(&config, &path.display().to_string());
+        }
+    } else {
+        println!("Error occurred while reading directory: {}", absolute_path)
     }
 }
