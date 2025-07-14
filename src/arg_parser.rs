@@ -14,6 +14,7 @@ pub fn parse_args() -> config::Config {
     let matches = Command::new("Image File Name Fixer")
         .version(PKG_VERSION.as_str())
         .about(clap::crate_description!())
+        .arg_required_else_help(true)
         .arg(
             Arg::new("move")
                 .short('m')
